@@ -1,5 +1,6 @@
 package finki.dimitrij.gjorgji.lab1.mapper;
 
+import finki.dimitrij.gjorgji.lab1.model.dto.author.request.CreateAuthorDTO;
 import finki.dimitrij.gjorgji.lab1.model.dto.author.response.AuthorResponseDTO;
 import finki.dimitrij.gjorgji.lab1.model.dto.book.request.CreateBookDTO;
 import finki.dimitrij.gjorgji.lab1.model.dto.book.response.BookResponseDTO;
@@ -29,6 +30,10 @@ public interface DomainMapper {
 
     CountryResponseDTO countryToCountryResponseDTO(Country country);
 
+    List<CountryResponseDTO> countriesToCountryResponseDTOs(List<Country> countries);
+
     List<AuthorResponseDTO> authorsToAuthorResponseDTOs(List<Author> authors);
 
+    @Mapping(source = "country", target = "country", ignore = true)
+    Author createAuthorDTOtoAuthor(CreateAuthorDTO createAuthorDTO);
 }

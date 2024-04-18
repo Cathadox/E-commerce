@@ -1,13 +1,11 @@
 package finki.dimitrij.gjorgji.lab1.web.controller;
 
+import finki.dimitrij.gjorgji.lab1.model.dto.author.request.CreateAuthorDTO;
 import finki.dimitrij.gjorgji.lab1.model.dto.author.response.AuthorResponseDTO;
 import finki.dimitrij.gjorgji.lab1.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +16,13 @@ import java.util.List;
 public class AuthorController {
 
     private final AuthorService authorService;
+
+    @PostMapping("")
+    public ResponseEntity<AuthorResponseDTO> addAuthor(@RequestBody CreateAuthorDTO createAuthorDTO){
+        final AuthorResponseDTO response = authorService.addAuthor(createAuthorDTO);
+
+        return ResponseEntity.ok().body(response);
+    }
 
     @GetMapping("")
     public ResponseEntity<List<AuthorResponseDTO>> getAllAuthors() {

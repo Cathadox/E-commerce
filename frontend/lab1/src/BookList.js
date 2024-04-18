@@ -51,7 +51,8 @@ const BookList = () => {
     return (
         <div>
             <h1>Book List</h1>
-            <a href={"/books/0"}>Add</a>
+            <a href={"/books/0"}>Add Book</a>
+            <a href={"/authors"}>Add Author</a>
             <ul>
                 {books.map((book) => (
                     <li key={book.id}>

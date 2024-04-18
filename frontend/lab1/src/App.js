@@ -6,6 +6,7 @@ import NavigationHeader from "./NavigationHeader";
 import BookEdit from "./BookEdit";
 import CategoryList from "./CategoryList";
 import {RouterProvider} from "react-router";
+import AuthorEdit from "./AuthorEdit";
 
 
 let router = createBrowserRouter([
@@ -28,6 +29,10 @@ let router = createBrowserRouter([
             {
                 path: "/categories",
                 element: <CategoryList/>,
+            },
+            {
+                path: "/authors",
+                element: <AuthorEdit/>
             }
         ],
     },

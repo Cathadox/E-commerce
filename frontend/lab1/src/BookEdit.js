@@ -49,8 +49,12 @@ const BookEdit = () => {
     }, [])
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
+        const { name, value, type } = e.target;
+        if (type === 'select-one') {
+            setFormData({ ...formData, [name]: value });
+        } else {
+            setFormData({ ...formData, [name]: type === 'number' ? parseInt(value) : value });
+        }
     };
 
     const onClose = () => {
