@@ -9,6 +9,7 @@ import finki.dimitrij.gjorgji.lab1.model.entity.Book;
 import finki.dimitrij.gjorgji.lab1.model.entity.Country;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,12 +19,16 @@ public interface DomainMapper {
     @Mapping(source = "authorId", target = "author", ignore = true)
     Book createBookDTOtoBook(CreateBookDTO createBookDTO);
 
-    List<BookResponseDTO> booksToBookResponseDTOs(List<Book> books);
+    default Page<BookResponseDTO> toDto(Page<Book> page) {
+        return page.map(this::bookToBookResponseDTO);
+    }
 
     BookResponseDTO bookToBookResponseDTO(Book book);
 
     AuthorResponseDTO authorToAuthorResponseDTO(Author author);
 
     CountryResponseDTO countryToCountryResponseDTO(Country country);
+
+    List<AuthorResponseDTO> authorsToAuthorResponseDTOs(List<Author> authors);
 
 }

@@ -5,8 +5,6 @@ import lombok.Builder;
 
 @Builder
 public record EditBookDTO(
-        @NotNull
-        Long id,
         String name, String category, Long authorId, Integer availableCopies
 ) {
 }

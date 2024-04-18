@@ -27,6 +27,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     annotationProcessor('org.projectlombok:lombok')
     annotationProcessor('org.mapstruct:mapstruct-processor:1.5.0.Final')
+    runtimeOnly 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {

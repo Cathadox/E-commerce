@@ -4,9 +4,10 @@ import finki.dimitrij.gjorgji.lab1.model.dto.book.request.CreateBookDTO;
 import finki.dimitrij.gjorgji.lab1.model.dto.book.request.EditBookDTO;
 import finki.dimitrij.gjorgji.lab1.model.dto.book.response.BookResponseDTO;
 import finki.dimitrij.gjorgji.lab1.service.BookService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
 public class BookController {
@@ -28,9 +30,9 @@ public class BookController {
         return ResponseEntity.created(URI.create("/books")).body(response);
     }
 
-    @PutMapping("")
-    public ResponseEntity<BookResponseDTO> editBook(@Valid @RequestBody EditBookDTO editBookDTO) {
-        final BookResponseDTO response = bookService.editBook(editBookDTO);
+    @PutMapping("/{id}")
+    public ResponseEntity<BookResponseDTO> editBook(@PathVariable Long id, @RequestBody EditBookDTO editBookDTO) {
+        final BookResponseDTO response = bookService.editBook(id, editBookDTO);
         return ResponseEntity.ok().body(response);
     }
 
@@ -56,8 +58,8 @@ public class BookController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<BookResponseDTO>> markAsRented() {
-        final List<BookResponseDTO> response = bookService.getAllBooks();
+    public ResponseEntity<Page<BookResponseDTO>> getAllBooks(Pageable pageable){
+        final Page<BookResponseDTO> response = bookService.getAllBooks(pageable);
 
         return ResponseEntity.ok().body(response);
     }

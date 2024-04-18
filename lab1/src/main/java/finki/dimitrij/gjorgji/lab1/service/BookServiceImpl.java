@@ -17,6 +17,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,10 +64,10 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookResponseDTO editBook(EditBookDTO editBookDTO) {
+    public BookResponseDTO editBook(Long id, EditBookDTO editBookDTO) {
         log.debug("Updating book [{}]", editBookDTO);
         try {
-            final Book book = bookRepository.findById(editBookDTO.id()).map(existingBook -> {
+            final Book book = bookRepository.findById(id).map(existingBook -> {
                 if (editBookDTO.name() != null) existingBook.setName(editBookDTO.name());
                 if (editBookDTO.category() != null)
                     existingBook.setCategory(BookCategory.valueOf(editBookDTO.category()));
@@ -112,10 +114,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponseDTO> getAllBooks() {
+    public Page<BookResponseDTO> getAllBooks(Pageable pageable) {
         log.debug("Getting all books");
-        final List<Book> books = bookRepository.findAll();
+        final Page<Book> books = bookRepository.findAll(pageable);
 
-        return domainMapper.booksToBookResponseDTOs(books);
+        return domainMapper.toDto(books);
     }
 }
